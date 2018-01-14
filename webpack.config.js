@@ -4,20 +4,21 @@ var SRC_DIR = path.join(__dirname, '/react-client/src');
 var DIST_DIR = path.join(__dirname, '/react-client/dist');
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  entry: `${SRC_DIR}/index.js`,
   output: {
-    filename: 'bundle.js',
-    path: DIST_DIR
+    path: DIST_DIR,
+    filename: 'bundle.js'
   },
   module : {
-    loaders : [
+    rules : [
       {
-        test : /\.jsx?/,
+        test : /\.js?/,
+        exclude: /node_modules/,
         include : SRC_DIR,
-        loader : 'babel-loader',      
-        query: {
-          presets: ['react', 'es2015']
-       }
+        loader : 'babel-loader',
+        options: {
+          presets: ['react']
+        }
       },
       {
         test: /\.scss$/,
