@@ -5,6 +5,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 var billboard = require("billboard-top-100").getChart;
 
+const port = process.env.PORT || 3000
+
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
@@ -87,6 +89,6 @@ app.get('/data', (req, res) => {
 
 // asyncCall();
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+app.listen(port, function() {
+  console.log(`listening on port ${port}!`);
 });
