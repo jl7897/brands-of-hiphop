@@ -5,3 +5,17 @@ body {
     text-align: center;
 }
 
+.omitted {
+  margin-right: 5px;
+}
+
+#x-axis {
+  margin: 5px auto;
+  margin-top: 0px !important;
+}
+
+#y-axis {
+  position: absolute;
+  top: 22%;
+  left: 15%;
+}

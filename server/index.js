@@ -10,30 +10,29 @@ var app = express();
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 var count = {
-  patek: 0,
-  gucci: 0,
-  versace: 0,
-  prada: 0,
-  chanel: 0,
-  louis: 0,
-  vuitton: 0,
-  fendi: 0,
-  dior: 0,
-  givenchy: 0,
-  ralph: 0, 
-  polo: 0,
-  saint: 0,
-  laurent: 0,
-  bape: 0,
   balenciaga: 0,
+  bape: 0,
+  chanel: 0,
+  dior: 0,
+  fendi: 0,
   giuseppe: 0,
-  zanotti: 0,
-  nike: 0,
-  jordan: 0,
-  margiela: 0,
-  "alexander wang": 0,
   goyard: 0,
-  raf: 0
+  givenchy: 0,
+  gucci: 0,
+  jordan: 0,
+  laurent: 0,
+  louis: 0,
+  margiela: 0,
+  nike: 0,
+  patek: 0,
+  polo: 0,
+  prada: 0,
+  raf: 0,
+  'ralph lauren': 0, 
+  saint: 0,
+  versace: 0,
+  vuitton: 0,
+  zanotti: 0
 }
 
 const billboardPromise = new Promise ((resolve, reject) => {
@@ -74,12 +73,14 @@ async function asyncCall() {
 app.get('/data', (req, res) => {
   asyncCall()
   .then((countObj) => {
-    console.log(countObj.patek);
     var frequency = []
     for (var brand in count) {
       frequency.push(`${brand},${count[brand]}`)
     }
     console.log(frequency);
+    for (const brand in count) {
+      count[brand] = 0;
+    }
     res.send(JSON.stringify(frequency))
   })
 })
