@@ -37,6 +37,8 @@ var count = {
   zanotti: 0
 }
 
+var chartData = [];
+
 const billboardPromise = new Promise ((resolve, reject) => {
   billboard('r-b-hip-hop-songs', (songs, err) => {
     if (err) {
@@ -72,19 +74,30 @@ async function asyncCall() {
   return count;
 }
 
-app.get('/data', (req, res) => {
-  asyncCall()
-  .then((countObj) => {
-    var frequency = []
-    for (var brand in count) {
-      frequency.push(`${brand},${count[brand]}`)
+asyncCall()
+.then((countObj) => {
+  var frequency = []
+  for (var brand in count) {
+    frequency.push(`${brand},${count[brand]}`)
+  }
+  console.log(frequency);
+
+  frequency.map((brand) => {
+    var tuple = brand.split(',');
+    if (tuple[1] > 0) {
+      chartData.push({x: tuple[0], y: (tuple[1] / 50 * 100)})
     }
-    console.log(frequency);
-    for (const brand in count) {
-      count[brand] = 0;
-    }
-    res.send(JSON.stringify(frequency))
   })
+
+  for (const brand in count) {
+    count[brand] = 0;
+  }
+  console.log('async call done')
+})
+
+app.get('/data', (req, res) => {
+  console.log(chartData);
+  res.send(JSON.stringify(chartData));
 })
 
 // asyncCall();

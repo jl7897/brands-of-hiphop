@@ -15,18 +15,8 @@ export default class App extends React.Component {
   componentDidMount () {
     $.get('/data')
     .then((array) => {
-      var data = JSON.parse(array);
-      var chartData = [];
-      data.map((brand) => {
-        var tuple = brand.split(',');
-        if (tuple[1] > 0) {
-          chartData.push({x: tuple[0], y: (tuple[1] / 50 * 100)})
-        }
-      })
-      console.log(chartData);
       this.setState({
-        count: JSON.parse(array),
-        chart: chartData
+        chart: array
       });
     })
   }
@@ -44,14 +34,6 @@ export default class App extends React.Component {
               colorBars
               data={this.state.chart}
             />
-          {/*this.state.count.map((brand) => {
-            var tuple = brand.split(',');
-            if (tuple[1] === '0') {
-              return;
-            } else {
-              return <p key={brand}><strong>{tuple[0]}: </strong>{tuple[1] / 50 * 100}%</p>
-            }
-          })*/}
           <h5 id='x-axis'>Brand Name</h5>
           <h5 id='y-axis'>% of charting songs <br/>that mention brand</h5>
           <p>***Due to the way this data is gathered, some songs may be omitted and therefore numbers may be slightly off***</p>
