@@ -16,7 +16,6 @@ export default class App extends React.Component {
     $.get('/data')
     .then((array) => {
       this.setState({
-        console.log(array, typeof array);
         chart: JSON.parse(array)
       });
     })
