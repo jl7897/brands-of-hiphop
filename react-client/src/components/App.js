@@ -14,9 +14,11 @@ export default class App extends React.Component {
 
   componentDidMount () {
     $.get('/data')
-    .then((array) => {
+    .then(obj => {
+      var parsed = JSON.parse(obj)
       this.setState({
-        chart: JSON.parse(array)
+        count: parsed.empty,
+        chart: parsed.chart
       });
     })
   }
@@ -26,8 +28,8 @@ export default class App extends React.Component {
         <div>
           <h1>Frequency of brands mentioned in the hiptop top 50 chart this week: </h1>
           <BarChart
-              height={300}
-              width={700}
+              height={450}
+              width={1050}
               grid
               axisLabels={{x: 'My x Axis', y: 'My y Axis'}}
               axes
@@ -41,10 +43,7 @@ export default class App extends React.Component {
           <p><i>The brands below were included in the search but showed up 0 times</i></p>
           <div>
             {this.state.count.map((brand) => {
-              var tuple = brand.split(',');
-              if (tuple[1] === '0') {
-                return <span key={brand} className='omitted'>{tuple[0]}</span>
-              }
+                return <span key={brand} className='omitted'>{brand}</span>
             })}
           </div>
         </div>

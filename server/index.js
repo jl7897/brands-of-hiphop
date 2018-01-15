@@ -38,6 +38,7 @@ var count = {
 }
 
 var chartData = [];
+var none = [];
 
 const billboardPromise = new Promise ((resolve, reject) => {
   billboard('r-b-hip-hop-songs', (songs, err) => {
@@ -86,6 +87,8 @@ asyncCall()
     var tuple = brand.split(',');
     if (tuple[1] > 0) {
       chartData.push({x: tuple[0], y: (tuple[1] / 50 * 100)})
+    } else {
+      none.push(tuple[0])
     }
   })
 
@@ -96,8 +99,8 @@ asyncCall()
 })
 
 app.get('/data', (req, res) => {
-  console.log(chartData);
-  res.send(JSON.stringify(chartData));
+  var data = {chart: chartData, empty: none}
+  res.send(JSON.stringify(data));
 })
 
 // asyncCall();
